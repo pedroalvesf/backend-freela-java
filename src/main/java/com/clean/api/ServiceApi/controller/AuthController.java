@@ -24,6 +24,7 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity LogIn(@RequestBody @Valid DataAuth data) {
+        System.out.println(data);
         var token = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authentication = manager.authenticate(token);
 

@@ -15,7 +15,6 @@ public record UserRegisterDataDTO(
         String name,
 
         UserRole role,
-        String phone,
         Boolean active,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

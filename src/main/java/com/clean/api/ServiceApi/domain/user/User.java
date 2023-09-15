@@ -31,7 +31,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private Boolean active;
-
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -62,6 +61,22 @@ public class User implements UserDetails {
         return username;
     }
 
+    public void excluir() {
+        this.active = false;
+    }
+
+    public void updateUser(UserUpdateDataDTO data) {
+        if (data.email() != null) {
+            this.email = data.email();
+            System.out.println();
+        }
+        if (data.name() != null) {
+            this.name = data.name();
+        }
+        if (data.username() != null) {
+            this.username = data.username();
+        }
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

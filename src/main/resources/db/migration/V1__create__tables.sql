@@ -1,0 +1,42 @@
+CREATE TABLE users(
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    role ENUM('USER', 'PROVIDER', 'ADMIN') DEFAULT 'USER',
+    active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW() ON UPDATE NOW(),
+
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE services (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    requestedById BIGINT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW() ON UPDATE NOW(),
+
+    PRIMARY KEY(id),
+    FOREIGN KEY (requestedById) REFERENCES users(id)
+);
+
+CREATE TABLE bids (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    serviceId BIGINT NOT NULL,
+    providerId BIGINT NOT NULL,
+    price FLOAT NOT NULL,
+    message TEXT NOT NULL,
+    active TINYINT(1) NOT NULL DEFAULT 1,
+    created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW() ON UPDATE NOW(),
+
+    PRIMARY KEY(id),
+    FOREIGN KEY (serviceId) REFERENCES services(id),
+    FOREIGN KEY (providerId) REFERENCES users(id)
+);
